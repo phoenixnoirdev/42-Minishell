@@ -12,9 +12,6 @@ Source :
 - https://medium.com/@mostafa.omrane/mes-conseils-si-je-devais-recommencer-minishell-a9783c51ba1b
 
 
-TEST
-
-
 ******************************************************************************
 Liste des Built-ins à Implémenter
 
