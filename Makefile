@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+         #
+#    By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 09:35:29 by nfordoxc          #+#    #+#              #
-#    Updated: 2024/08/22 13:16:40 by nfordoxc         ###   Luxembourg.lu      #
+#    Updated: 2024/08/26 11:16:36 by phkevin          ###   Luxembour.lu       #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,9 @@ RM				=	rm -f
 
 LIB_LIBFT_DIR	=	./libft
 LIB_PRINTF_DIR	=	./ft_printf
-LIB_GNL_DIR		=	./gnl
 
 LIBFT_NAME		=	-lft
 FTPRINTF_NAME	=	-lftprintf
-LIB_GNL_NAME	=	-lgnl
 
 LIB_PROG		=
 LIB_OPTI		=
@@ -154,7 +152,6 @@ $(LIB_LIBFT_DIR)/libft.a:
 	@cc -Wall -Werror -Wextra -c -o $@ $<
 
 deb:		$(LIB_LIBFT_DIR)/libft.a \
-			$(LIB_GNL_DIR)/libgnl.a \
 			$(OBJ)
 
 	@$(CC) $(CFLAGS) $(CC_OPT) $(OBJ) $(MYLIBS) -g -o $(NAME)
