@@ -1,0 +1,168 @@
+Source :
+
+- https://github.com/Hqndler/42-minishell
+- https://codesandbox.io/s/gaspachowminishell-42-04ns1?file=/main.c
+- https://medium.com/@abkabex/minishell-42-f680eadde592
+- http://i.paysdu42.fr/?page=minishell.c
+- https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
+- https://harm-smits.github.io/42docs/projects/minishell
+- https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
+- https://www.codequoi.com/envoyer-et-intercepter-un-signal-en-c/
+- https://github.com/LucieLeBriquer/minishell?tab=readme-ov-file#ressources
+- https://medium.com/@mostafa.omrane/mes-conseils-si-je-devais-recommencer-minishell-a9783c51ba1b
+
+
+******************************************************************************
+Parsing:
+
+
+Solution possible pour le parsing 
+
+Alternatives à la Tokenisation
+
+	- Analyse Linéaire :
+		Ecrire un parser qui lit la ligne de commande caractère par caractère, 
+		en déterminant le contexte à mesure que sa avances.
+		Cette approche est plus simple pour des commandes très basiques mais 
+		devient rapidement compliquée à gérer pour les commandes complexes.
+
+	- Expressions Régulières :
+		Les expressions régulières peuvent être utilisées pour détecter des 
+		motifs dans la ligne de commande, comme les quotes ou les redirections.
+		Cependant, cette méthode peut manquer de flexibilité pour gérer les 
+		cas imbriqués ou les combinaisons plus sophistiquées de commandes.
+
+	- Automates Finis :
+		Un automate fini est une méthode plus formelle qui définit un ensemble 
+		d'états et de transitions pour parser une entrée.
+		Cette approche est puissante et peut être utilisée pour implémenter
+		des parsers robustes, mais elle est souvent complexe à mettre
+		en place.
+
+
+
+Liste des delimiteurs
+
+	1. Espaces et Tabulations
+		Espace ( ) : Utilisé pour séparer les mots et les arguments.
+		Tabulation (\t) : Fonctionne de manière similaire à l'espace.
+
+	2. Caractères Spéciaux pour les Opérateurs de Contrôle
+		Point-virgule (;) : Sépare les commandes sur une même ligne.
+		Esperluette (&) : Utilisée pour exécuter une commande en arrière-plan.
+		Double esperluette (&&) : Utilisé pour exécuter la commande suivante uniquement si la commande précédente a réussi (opérateur logique ET).
+		Double barre verticale (||) : Utilisé pour exécuter la commande suivante uniquement si la commande précédente a échoué (opérateur logique OU).
+
+	3. Redirections d'Entrée et de Sortie
+		Inférieur (<) : Redirection de l'entrée.
+		Supérieur (>) : Redirection de la sortie.
+		Double supérieur (>>) : Redirection de la sortie avec ajout (append).
+		Supérieur et inférieur (<>) : Redirection d'entrée/sortie.
+		Pipe (|) : Utilisé pour rediriger la sortie d'une commande vers l'entrée d'une autre commande.
+		Supérieur avec esperluette (>&) : Redirection de la sortie standard et de l'erreur standard.
+		Double supérieur avec esperluette (>>&) : Ajout de la sortie standard et de l'erreur standard.
+
+	4. Caractères de Groupement et de Substitution
+		Parenthèses ouvrantes et fermantes (()) : Utilisées pour grouper des commandes ou pour lancer des sous-shells.
+		Crochets ouvrants et fermants ([]) : Utilisés dans les tests conditionnels et les expansions de motifs (globbing).
+		Accolades ouvrantes et fermantes ({}) : Utilisées pour l'expansion de fichiers et la substitution de commandes.
+		Apostrophes inversées ou backticks (` `) : Utilisées pour la substitution de commande (déprécié, remplacé par $()).
+		Dollar et parenthèses ($()) : Utilisé pour la substitution de commande.
+
+	5. Quotes
+		Quotes simples (' ') : Protègent tout ce qui se trouve à l'intérieur contre l'expansion ou l'interprétation.
+		Quotes doubles (" ") : Protègent tout ce qui se trouve à l'intérieur, à l'exception de $, \, `, et !.
+		Backslash (\) : Utilisé pour échapper le caractère suivant.
+
+	6. Caractères de Nouvelle Ligne et Fin de Fichier
+		Nouvelle ligne (\n) : Utilisé pour terminer une commande.
+		Fin de fichier (EOF) : Utilisé pour indiquer la fin d'une entrée.
+
+	7. Autres Caractères Spéciaux
+		Tilde (~) : Utilisé pour représenter le répertoire personnel de l'utilisateur.
+		Asterisk (*) : Utilisé dans le globbing pour correspondre à zéro ou plusieurs caractères.
+		Point d'interrogation (?) : Utilisé dans le globbing pour correspondre à un seul caractère.
+		Exclamation (!) : Utilisé pour l'expansion d'historique ou pour la négation dans des expressions conditionnelles.
+
+
+
+cmd simple
+	recpetione la cmd "echo test"
+		controle les 5 premier character de la commande si sont egale a "echo 3"
+		et lance la commande.
+
+cmd complexe
+	reception de la commande (echo toto && echo tata)
+	
+******************************************************************************
+
+
+
+******************************************************************************
+Info enum
+
+	enum test
+	{
+		t0,
+		t1,
+		t2
+	}
+
+t0 = 0 et t1 = 1 l'enum t0 sera set a 0 et chaue enum suivant sera incrementer
+de 1 a partire du champ precedent.
+Donc si t1 = 10 alors t2 = 11.
+
+Pour redefinire la valeur de t1 il faut la set dans la declaration de l'enum.
+
+	enum test
+	{
+		t0,
+		t1 = 10,
+		t2
+	}
+
+Une fois definie un enum ne peu etre modifier, sa valeur est static.
+
+les enum peuvent etre utiliser comme type.
+ex:
+	enum test itest;
+	itest = t1;
+	printf("%d\n", t1);
+	
+itest sera egale a t1.
+
+Les enum peuvent etre integrer dans les structur.
+******************************************************************************
+
+
+
+******************************************************************************
+Chevron  info
+(>  >>) derriere les chevrons uniquement un fichier texte
+(<  <<) derriere les chevrons uniquement un fichier texte
+******************************************************************************
+
+
+
+******************************************************************************
+Structure Pipex
+
+typedef struct s_pipex
+{
+	int nb_cmd;					// Nb cmd parser						------------------
+	int fd_in;					// a nico
+	int fd_out;					// a nico
+	int here_doc;				// 1 ou 0 (savoir si on utilise <<) 	------------------
+	char *limiter;				// EOF premier element apres << 		------------------
+	char *file_in;				// derriere < ou la cmd 				------------------
+	char *file_out;				// derriere > 							------------------
+	char **path_array;			// Tab de path 
+	char **cmd_opt_array;		// Tab cmd + option 					------------------
+	char **cmd_array;			// uniquement les commandes 			------------------
+	char **acces_path;			// Tab qui le binaire de chaque cmd avec sont path
+} t_pipex;
+******************************************************************************
+
+
+
+
