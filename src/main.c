@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
+/*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 15:41:47 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/23 15:10:04 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/08/27 10:35:02 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ int main(int argc, char **argv, char **envp)
 		line = readline(TERM_NAME);
 		if (ft_strlen(line))
 			add_history(line);
+		ft_parse(line);
 		//cmd = ft_parse(line);
 		ft_init_data(&data, line, envp);
 		free(line);
-		ft_builtin(&data, env);
+		//ft_builtin(&data, env);
 		//ft_parse_line(&data);
 		/* faire un fork et executer cmd dans le fils */
 		/* attendre le process fils et enregistrer le code retour */

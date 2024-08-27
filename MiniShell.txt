@@ -29,12 +29,7 @@ Liste des Built-ins à Implémenter
         Affiche le répertoire courant.
         Aucune option spécifique à gérer.
         Exemple : pwd
-
-    export
-        Ajoute ou met à jour une variable d'environnement.
-        Exemple : export VAR=value
-        Si aucune variable n'est spécifiée, affiche la liste des variables exportées.
-
+int
     unset
         Supprime une variable d'environnement.
         Exemple : unset VAR

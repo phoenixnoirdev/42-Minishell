@@ -6,7 +6,7 @@
 #    By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 09:35:29 by nfordoxc          #+#    #+#              #
-#    Updated: 2024/08/26 11:16:36 by phkevin          ###   Luxembour.lu       #
+#    Updated: 2024/08/27 13:10:35 by phkevin          ###   Luxembour.lu       #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,11 @@ SRC				=	./src/main.c \
 					./src/ft_env.c \
 					./src/ft_cd.c \
 					./src/ft_signal.c \
-					./src/ft_exit.c
+					./src/ft_exit.c \
+					./src/parsing/arg.c \
+					./src/parsing/parsing.c \
+					./src/parsing/token.c \
+					./src/parsing/ft_splitpars.c \
 
 OBJ				=	$(SRC:.c=.o)
 

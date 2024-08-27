@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
+/*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 15:46:06 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/23 14:57:00 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/08/27 13:08:11 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@
 # include "../libft/libft.h"
 
 /*
+ *	Enum
+ */
+enum charspec
+{
+	EMPTY,
+	PIPE,
+	STB = 42
+};
+
+/*
  *	Structure
  */
 
@@ -59,8 +69,21 @@ typedef struct s_data
 	int		code_child;
 } t_data;
 
-//typedef struct s_command t_cmd;
+// Parseur
+typedef struct s_cmdmaster
+{
+	int nb_cmd;					// Nb cmd parser
+} t_cmdm;
 
+// Commande
+typedef struct s_cmdc
+{
+	char *cmd;						// Commande
+	char **args;					// Argument de la commande
+	struct s_cmdc	*next;			// Commande suivante dans le pipeline
+} t_cmdc;
+
+//typedef struct s_command t_cmd;
 typedef struct s_cmd
 {
 	char			**args;			// Tableau d'arguments (la commande et ses arguments)
@@ -103,5 +126,13 @@ void		ft_init_env(t_env **env, char **envp);
 
 void		ft_builtin(t_data *data, t_env *env);
 void		handle_signal(int sign);
+
+/*
+ * Parsing
+ */
+void		ft_parse(char *str);
+int			ft_gettype(char str);
+int			ft_getnbcmd(char *str);
+char		**ft_splitpars(char const *s, char c);
 
 #endif

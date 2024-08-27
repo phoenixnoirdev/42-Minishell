@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_splitpars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 15:04:24 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/27 13:07:38 by phkevin          ###   Luxembour.lu      */
+/*   Created: 2024/08/27 14:42:05 by phkevin           #+#    #+#             */
+/*   Updated: 2024/08/27 15:54:03 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
 /*
  * <cat>str</cat>
@@ -36,21 +36,35 @@
 static int	countsection(char const *s, char const c)
 {
 	int	section;
-	int	index;
+	int	i;
 
 	section = 0;
-	index = 0;
-	while (s[index])
+	i = 0;
+	while (s[i])
 	{
-		while (s[index] == c)
-			index++;
-		if (s[index] && s[index] != c)
+		while (s[i] == c)
+		{
+			if (s[i] == c && s[i + 1] == c)
+				i +=2;
+			else
+				i++;
+		}
+		if (s[i] && s[i] != c)
 		{
 			section++;
-			while (s[index] && s[index] != c)
-				index++;
+			//printf("sec n %d\n", section);
+			while (s[i] && (s[i] != c || (s[i] == c && s[i + 1] == c)))
+			{
+				//printf("%c", s[index]);
+				if (s[i] == c && s[i + 1] == c)
+					i +=2;
+				else
+					i++;
+			}
+			//printf("\n");
 		}
 	}
+	//printf("sec n %d\n", section);
 	return (section);
 }
 
@@ -79,20 +93,32 @@ static char	*ft_malloc_row(char const *s, char c)
 {
 	char	*row;
 	int		index;
+	int		i;
 
 	index = 0;
-	while (s[index] && s[index] != c)
-		index++;
+	while (s[index] && (s[index] != c || (s[index] == c && s[index + 1] == c)))
+	{
+		if (s[index] == c && s[index + 1] == c)
+			index +=2;
+		else
+			index++;
+	}
 	row = (char *)malloc((index + 1) * sizeof(char));
 	if (!row)
 		return (NULL);
 	index = 0;
-	while (s[index] && s[index] != c)
+	i = 0;
+	while (s[index] && (s[index] != c || (s[index] == c && s[index + 1] == c)))
 	{
-		row[index] = s[index];
-		index++;
+		if (s[index] == c && s[index + 1] == c)
+		{
+			row[i++] = s[index ++];
+			row[i++] = s[index ++];
+		}
+		else
+			row[i++] = s[index++];
 	}
-	row[index] = 0;
+	row[i] = 0;
 	return (row);
 }
 
@@ -117,7 +143,7 @@ static char	*ft_malloc_row(char const *s, char c)
  *
  */
 
-char	**ft_split(char const *s, char c)
+char	**ft_splitpars(char const *s, char c)
 {
 	char	**array;
 	int		index;
@@ -131,14 +157,25 @@ char	**ft_split(char const *s, char c)
 	while (*s)
 	{
 		while (*s && *s == c)
-			s++;
+		{
+			if (*s == c && *(s + 1) == c)
+				s += 2;
+			else
+				s++;
+		}
 		if (*s && *s != c)
 		{
-			array[index++] = ft_malloc_row(s, c);
+			array[index] = ft_malloc_row(s, c);
 			if (!array)
 				return (ft_free_array(array));
+			index++;
 			while (*s && *s != c)
-				s++;
+			{
+				if (*s == c && *(s + 1) == c)
+					s += 2;
+				else
+					s++;
+			}
 		}
 	}
 	array[index] = NULL;

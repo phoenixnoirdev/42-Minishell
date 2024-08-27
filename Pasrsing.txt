@@ -106,7 +106,7 @@ Info enum
 		t0,
 		t1,
 		t2
-	}
+	};
 
 t0 = 0 et t1 = 1 l'enum t0 sera set a 0 et chaue enum suivant sera incrementer
 de 1 a partire du champ precedent.
@@ -119,7 +119,7 @@ Pour redefinire la valeur de t1 il faut la set dans la declaration de l'enum.
 		t0,
 		t1 = 10,
 		t2
-	}
+	};
 
 Une fois definie un enum ne peu etre modifier, sa valeur est static.
 
@@ -153,6 +153,7 @@ typedef struct s_pipex
 	int fd_in;					// a nico
 	int fd_out;					// a nico
 	int here_doc;				// 1 ou 0 (savoir si on utilise <<) 	------------------
+	int append;					// 1 ou 0 si >> ou >
 	char *limiter;				// EOF premier element apres << 		------------------
 	char *file_in;				// derriere < ou la cmd 				------------------
 	char *file_out;				// derriere > 							------------------
