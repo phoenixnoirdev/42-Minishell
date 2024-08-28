@@ -44,27 +44,21 @@ static int	countsection(char const *s, char const c)
 	{
 		while (s[i] == c)
 		{
+			i++;
 			if (s[i] == c && s[i + 1] == c)
 				i +=2;
-			else
-				i++;
 		}
 		if (s[i] && s[i] != c)
 		{
 			section++;
-			//printf("sec n %d\n", section);
 			while (s[i] && (s[i] != c || (s[i] == c && s[i + 1] == c)))
 			{
-				//printf("%c", s[index]);
+				i++;
 				if (s[i] == c && s[i + 1] == c)
 					i +=2;
-				else
-					i++;
 			}
-			//printf("\n");
 		}
 	}
-	//printf("sec n %d\n", section);
 	return (section);
 }
 
@@ -89,7 +83,7 @@ static int	countsection(char const *s, char const c)
  *
  */
 
-static char	*ft_malloc_row(char const *s, char c)
+static char	*ft_malloc_row(int refrow, char const *s, char c)
 {
 	char	*row;
 	int		index;
@@ -98,25 +92,22 @@ static char	*ft_malloc_row(char const *s, char c)
 	index = 0;
 	while (s[index] && (s[index] != c || (s[index] == c && s[index + 1] == c)))
 	{
+		index++;
 		if (s[index] == c && s[index + 1] == c)
 			index +=2;
-		else
-			index++;
 	}
 	row = (char *)malloc((index + 1) * sizeof(char));
 	if (!row)
 		return (NULL);
 	index = 0;
 	i = 0;
+	if (refrow > 0 && s[index] == ' ')
+		index++;
 	while (s[index] && (s[index] != c || (s[index] == c && s[index + 1] == c)))
 	{
 		if (s[index] == c && s[index + 1] == c)
-		{
-			row[i++] = s[index ++];
-			row[i++] = s[index ++];
-		}
-		else
 			row[i++] = s[index++];
+		row[i++] = s[index++];
 	}
 	row[i] = 0;
 	return (row);
@@ -158,23 +149,21 @@ char	**ft_splitpars(char const *s, char c)
 	{
 		while (*s && *s == c)
 		{
+			s++;
 			if (*s == c && *(s + 1) == c)
-				s += 2;
-			else
-				s++;
+				s += 2;	
 		}
-		if (*s && *s != c)
+		if (*s && *s != c )
 		{
-			array[index] = ft_malloc_row(s, c);
+			array[index] = ft_malloc_row(index, s, c);
 			if (!array)
 				return (ft_free_array(array));
 			index++;
 			while (*s && *s != c)
 			{
+				s++;
 				if (*s == c && *(s + 1) == c)
 					s += 2;
-				else
-					s++;
 			}
 		}
 	}
