@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 15:46:06 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/27 13:08:11 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/08/29 11:16:33 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ typedef struct s_cmdmaster
 // Commande
 typedef struct s_cmdc
 {
+	char *cmd_arg;					// Commande + argument
 	char *cmd;						// Commande
-	char **args;					// Argument de la commande
+	char *args;						// Argument de la commande
 	struct s_cmdc	*next;			// Commande suivante dans le pipeline
 } t_cmdc;
 

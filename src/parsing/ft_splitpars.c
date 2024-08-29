@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 14:42:05 by phkevin           #+#    #+#             */
-/*   Updated: 2024/08/27 15:54:03 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/08/29 09:24:45 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,30 +86,30 @@ static int	countsection(char const *s, char const c)
 static char	*ft_malloc_row(int refrow, char const *s, char c)
 {
 	char	*row;
-	int		index;
 	int		i;
+	int		ii;
 
-	index = 0;
-	while (s[index] && (s[index] != c || (s[index] == c && s[index + 1] == c)))
+	i = 0;
+	while (s[i] && (s[i] != c || (s[i] == c && s[i + 1] == c)))
 	{
-		index++;
-		if (s[index] == c && s[index + 1] == c)
-			index +=2;
+		i++;
+		if (s[i] == c && s[i + 1] == c)
+			i +=2;
 	}
-	row = (char *)malloc((index + 1) * sizeof(char));
+	row = (char *)malloc((i + 1) * sizeof(char));
 	if (!row)
 		return (NULL);
-	index = 0;
 	i = 0;
-	if (refrow > 0 && s[index] == ' ')
-		index++;
-	while (s[index] && (s[index] != c || (s[index] == c && s[index + 1] == c)))
+	ii = 0;
+	if (refrow > 0 && s[i] == ' ')
+		i++;
+	while (s[i] && (s[i] != c || (s[i] == c && s[i + 1] == c)))
 	{
-		if (s[index] == c && s[index + 1] == c)
-			row[i++] = s[index++];
-		row[i++] = s[index++];
+		if (s[i] == c && s[i + 1] == c)
+			row[ii++] = s[i++];
+		row[ii++] = s[i++];
 	}
-	row[i] = 0;
+	row[ii] = 0;
 	return (row);
 }
 

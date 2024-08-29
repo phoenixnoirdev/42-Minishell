@@ -163,7 +163,3 @@ typedef struct s_pipex
 	char **acces_path;			// Tab qui le binaire de chaque cmd avec sont path
 } t_pipex;
 ******************************************************************************
-
-
-
-

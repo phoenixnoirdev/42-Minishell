@@ -211,7 +211,8 @@ Explications des fonctions autorisees pour le projet Minishell
 		Un pointeur vers un entier où sera stocké le statut de terminaison du 
 		processus fils. Ce statut peut fournir des informations sur la manière 
 		dont le processus fils s'est terminé.
-
+	// Tableau d'arguments (la commande et ses arguments)
+	char			
 	options :
 		Un entier qui permet de spécifier des options supplémentaires, 
 		telles que :
