@@ -6,7 +6,7 @@
 #    By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 13:47:49 by nfordoxc          #+#    #+#              #
-#    Updated: 2024/08/23 09:32:21 by nfordoxc         ###   Luxembourg.lu      #
+#    Updated: 2024/08/29 13:09:26 by nfordoxc         ###   Luxembourg.lu      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 ################################################################################
 
 CC				=	cc
-CFLAGS			=	-Wall -Werror -Wextra
+CFLAGS			=	-Wall -Werror -Wextra -g
 
 DEB				=	valgrind
 DEB_OPT			=	--tool=memcheck --leak-check=full --show-leak-kinds=all
@@ -37,7 +37,8 @@ LIB_NAME		=	libft.a
 #	Mandatory part                                                             #
 ################################################################################
 
-SRC				=	ft_isalpha.c \
+SRC				=	ft_charchr.c \
+					ft_isalpha.c \
 					ft_isdigit.c \
 					ft_isalnum.c \
 					ft_isascii.c \
@@ -77,6 +78,7 @@ SRC				=	ft_isalpha.c \
 					ft_striteri.c \
 					ft_putchar_fd.c \
 					ft_putstr_fd.c \
+					ft_putstrarray.c \
 					ft_putendl_fd.c \
 					ft_putnbr_fd.c \
 					ft_countsection.c \
@@ -137,7 +139,7 @@ BWHITE			=	'\033[1;97m'
 ################################################################################
 
 CURRENT_FILE	= 	0
-NB_SRC			=	52
+NB_SRC			=	54
 SLEEP_TIME		=	0.001
 
 ################################################################################
@@ -169,7 +171,7 @@ $(NAME):	$(OBJ)
 		printf "="; \
 	done
 	@printf "] $(CURRENT_FILE)/$(NB_SRC)"
-	@cc -Wall -Werror -Wextra -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	@$(RM) *.o > /dev/null 2>&1

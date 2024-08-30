@@ -12,6 +12,12 @@ Source :
 - https://medium.com/@mostafa.omrane/mes-conseils-si-je-devais-recommencer-minishell-a9783c51ba1b
 
 
+
+******************************************************************************
+clang --Analize  = Permet de mettre en lumiere les potentiel erreurs (analyse le code)
+******************************************************************************
+
+
 ******************************************************************************
 Liste des Built-ins à Implémenter
 

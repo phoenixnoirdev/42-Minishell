@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 14:42:05 by phkevin           #+#    #+#             */
-/*   Updated: 2024/08/29 09:24:45 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/08/30 10:05:32 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static char	*ft_malloc_row(int refrow, char const *s, char c)
 	char	*row;
 	int		i;
 	int		ii;
+	(void)refrow;
 
 	i = 0;
 	while (s[i] && (s[i] != c || (s[i] == c && s[i + 1] == c)))
@@ -101,7 +102,7 @@ static char	*ft_malloc_row(int refrow, char const *s, char c)
 		return (NULL);
 	i = 0;
 	ii = 0;
-	if (refrow > 0 && s[i] == ' ')
+	while (s[i] == ' ' || s[i] == 9)
 		i++;
 	while (s[i] && (s[i] != c || (s[i] == c && s[i + 1] == c)))
 	{

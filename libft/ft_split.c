@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
+/*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:04:24 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/27 13:07:38 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/06/17 11:08:58 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 

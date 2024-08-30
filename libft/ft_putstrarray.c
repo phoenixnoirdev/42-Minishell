@@ -1,43 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_putstrarray.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 08:53:00 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/27 15:09:47 by nfordoxc         ###   Luxembourg.lu     */
+/*   Created: 2024/08/29 13:04:59 by nfordoxc          #+#    #+#             */
+/*   Updated: 2024/08/29 13:09:07 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "libft.h"
 
 /*
- * <cat>memory</cat>
+ * <cat>print</cat>
  *
  * <summary>
- *	char **ft_free_array(char **array)
+ *	void	ft_putstrarray(char **a_str)
  * </summary>
  *
  * <description>
- *	ft_free_array free all element of the array and the array.
+ *	ft_putstrarray print an array of string.
  * </description>
  *
- * <param type="char **" name="array">array of char* to free</param>
+ * <param type="char **" name="a_str">str array to print</param>
  *
  * <return>
- *	NULL.
+ *	void.
  * </return>
  *
  */
 
-char	**ft_free_array(char **array)
+void	ft_putstrarray(char **a_str)
 {
 	int	index;
 
+	if (!a_str)
+		return ;
 	index = -1;
-	while (array[++index])
-		free(array[index]);
-	free(array);
-	return (NULL);
+	while (a_str[++index])
+		ft_putendl_fd(a_str[index], 1);
 }

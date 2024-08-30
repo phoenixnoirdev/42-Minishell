@@ -1,43 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_charchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 08:53:00 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/27 15:09:47 by nfordoxc         ###   Luxembourg.lu     */
+/*   Created: 2024/08/29 11:44:25 by nfordoxc          #+#    #+#             */
+/*   Updated: 2024/08/29 11:49:10 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
- * <cat>memory</cat>
+ * <cat>str</cat>
  *
  * <summary>
- *	char **ft_free_array(char **array)
+ *	int	ft_charchr(const char *s, char c)
  * </summary>
  *
  * <description>
- *	ft_free_array free all element of the array and the array.
+ *	ft_charchr return the index of char c on the string s.
  * </description>
  *
- * <param type="char **" name="array">array of char* to free</param>
+ * <param type="const char *" name="s">string to parse</param>
+ * <param type="char" name="c">char to fund</param>
  *
  * <return>
- *	NULL.
+ *	the index of the char c or -1 if not fund.
  * </return>
  *
  */
 
-char	**ft_free_array(char **array)
+int	ft_charchr(const char *s, char c)
 {
 	int	index;
 
 	index = -1;
-	while (array[++index])
-		free(array[index]);
-	free(array);
-	return (NULL);
+	if (!s)
+		return (index);
+	while (s[++index])
+		if (s[index] == c)
+			return (index);
+	if (c == 0)
+		return (index);
+	return (-1);
 }

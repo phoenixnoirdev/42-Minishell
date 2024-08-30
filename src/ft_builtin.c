@@ -3,46 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
+/*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:52:43 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/23 15:11:14 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/08/30 15:49:14 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_pwd(t_env **env)
-{
-	t_env	*current;
+/*
+ * <cat>minishell</cat>
+ *
+ * <summary>
+ * 	void	ft_builtin(t_data *data, t_env **env)
+ * </summary>
+ *
+ * <description>
+ * 	ft_builtin check the command value entered by the user is a builtin function
+ * 	If it's a builtin function, it's running the command function or do nothing.
+ * </description>
+ *
+ * <param type="t_data *" name="data">data struct</param>
+ * <param type="t_env **" name="env">linked list env</param>
+ *
+ * <return>
+ * 	void.
+ * </return>
+ *
+ */
 
-	current = *env;
-	while (ft_strncmp(current->value, "PWD=", 4))
-		current = current->next;
-	printf("%s\n", current->value + 4);
-	return (0);
-}
-
-
-void	ft_builtin(t_data *data, t_env *env)
+void	ft_builtin(t_cmdc *data, t_env **env)
 {
 	char	*cmd;
+	char	**a_cmd;
 
 	cmd = data->cmd;
-	if (!ft_strncmp(cmd, "echo ", 5) || ft_strequal(cmd, "echo"))
-		ft_echo(data);
-	else if (!ft_strncmp(cmd, "cd ", 3) || ft_strequal(cmd, "cd"))
-		ft_cd(cmd, env, data);
-	else if (ft_strequal(cmd, "pwd"))
-		ft_pwd(&env);
-	/*else if (!ft_strncmp(cmd, "export", 6))
-		ft_export(data);
-	else if (!ft_strncmp(cmd, "unset", 5))
-		ft_unset(data);*/
-	else if (!ft_strncmp(cmd, "env", 3))
-		ft_env(env);
-	else if (!ft_strncmp(cmd, "exit", 5))
-		ft_exit(data);
+	a_cmd = ft_split(cmd, ' ');
+	if (ft_strequal(a_cmd[0], "echo"))
+		data->code_child = ft_echo(data, *env);
+	else if (ft_strequal(a_cmd[0], "cd"))
+		data->code_child = ft_cd(data, *env);
+	else if (ft_strequal(a_cmd[0], "pwd"))
+		data->code_child = ft_pwd(*env);
+	else if (ft_strequal(a_cmd[0], "export"))
+		data->code_child = ft_export(data, *env);
+	else if (ft_strequal(a_cmd[0], "unset"))
+		data->code_child = ft_unset(data, env);
+	else if (ft_strequal(a_cmd[0], "env"))
+		data->code_child = ft_env(data, env);
+	else if (ft_strequal(a_cmd[0], "exit"))
+		ft_exit(data, env);
 	else
-		return ;
+	{
+		//ft_print_error(a_cmd[0]);
+		data->code_child = 127;
+	}
+	ft_free_array(a_cmd);
 }

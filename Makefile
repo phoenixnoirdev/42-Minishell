@@ -6,7 +6,7 @@
 #    By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 09:35:29 by nfordoxc          #+#    #+#              #
-#    Updated: 2024/08/27 13:10:35 by phkevin          ###   Luxembour.lu       #
+#    Updated: 2024/08/30 11:51:19 by phkevin          ###   Luxembour.lu       #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@
 
 CC				=	cc
 CFLAGS			=	-Wall -Werror -Wextra -g
-CC_OPT			=	
 
 DEB				=	valgrind
 DEB_OPT			=	--tool=memcheck \
@@ -59,16 +58,23 @@ MYLIBS_BONUS	=
 ################################################################################
 
 SRC				=	./src/main.c \
+					./src/ft_error.c \
 					./src/ft_builtin.c \
-					./src/ft_echo.c \
-					./src/ft_env.c \
-					./src/ft_cd.c \
 					./src/ft_signal.c \
-					./src/ft_exit.c \
+					./src/builtin/ft_echo.c \
+					./src/builtin/ft_env.c \
+					./src/builtin/ft_env_utils.c \
+					./src/builtin/ft_export.c \
+					./src/builtin/ft_export_utils.c \
+					./src/builtin/ft_cd.c \
+					./src/builtin/ft_pwd.c \
+					./src/builtin/ft_unset.c \
+					./src/builtin/ft_exit.c \
 					./src/parsing/arg.c \
 					./src/parsing/parsing.c \
 					./src/parsing/token.c \
 					./src/parsing/ft_splitpars.c \
+					./src/parsing/listpars.c \
 
 OBJ				=	$(SRC:.c=.o)
 

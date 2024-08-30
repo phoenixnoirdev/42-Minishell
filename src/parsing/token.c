@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 10:14:02 by phkevin           #+#    #+#             */
-/*   Updated: 2024/08/27 10:39:00 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/08/30 09:00:33 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,15 @@ int	ft_getnbcmd(char *str)
 	while (str[i])
 	{
 		if (ft_gettype(str[i]) == PIPE)
-			cmd++;
+		{
+			if (str[i + 1] != '\0' && ft_gettype(str[i + 1]) != PIPE)
+			{
+				if (i != 0 && ft_gettype(str[i - 1]) != PIPE)
+				{
+					cmd++;
+				}
+			}
+		}
 		i++;
 	}
 	return (cmd);

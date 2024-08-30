@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 15:46:06 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/29 11:16:33 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/08/30 15:55:21 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define BLUE	"\033[1;94m"
 # define WHITE	"\033[0m"
-# define TERM_NAME	BLUE"minishell"WHITE"$ "
+# define TERM_NAME	BLUE"minishell"WHITE
 
 /*
  *	Standart library
@@ -55,19 +55,16 @@ enum charspec
 
 typedef struct s_env
 {
+	char			*key;
 	char			*value;
 	struct s_env	*next;
-} t_env;
+}	t_env;
 
-typedef struct s_data
+/*typedef struct s_data
 {
 	char	*cmd;
-	char	pwd[2048];
-	char	*line;
-	char	**env;
-	char	**array_line;
 	int		code_child;
-} t_data;
+}	t_data;*/
 
 // Parseur
 typedef struct s_cmdmaster
@@ -78,9 +75,8 @@ typedef struct s_cmdmaster
 // Commande
 typedef struct s_cmdc
 {
-	char *cmd_arg;					// Commande + argument
-	char *cmd;						// Commande
-	char *args;						// Argument de la commande
+	char			*cmd;					// Commande + argument
+	int				code_child;
 	struct s_cmdc	*next;			// Commande suivante dans le pipeline
 } t_cmdc;
 
@@ -104,36 +100,79 @@ typedef struct s_cmd
  *	Buildin
  */
 
-/*
-echo (with option -n only)
-cd (with path)
-pwd (no option)
-export (no option)
-unset (no option)
-env (no option)
-exit (no option)
-*/
+	/*
+	 *	echo
+	 */
 
-int			ft_exit(t_data *data);
+int			ft_echo(t_cmdc *data, t_env *env);
 
-void		ft_cd(char *cmd, t_env *env, t_data *data);
-void		ft_env(t_env *env);
-void		ft_echo(t_data *data);
+	/*
+	 *	env
+	 */
+
+int			ft_env(t_cmdc *data, t_env **env);
+
+char		*ft_get_env_value(t_env *env, const char *name);
+
+void		ft_free_env(t_env *env);
+void		ft_update_shlvl(t_env **env);
 void		ft_init_env(t_env **env, char **envp);
+void		ft_set_env_value(t_env *env, char *name, char *value);
+
+t_env		*ft_add_node(t_env *env, char *key, char *value);
+
+	/*
+	 *	exit
+	 */
+
+int			ft_exit(t_cmdc *data, t_env **env);
+
+	/*
+	 *	export
+	 */
+
+int			ft_export(t_cmdc *data, t_env *env);
+
+	/*
+	 *	cd
+	 */
+
+int			ft_cd(t_cmdc *data, t_env *env);
+
+	/*
+	 *	pwd
+	 */
+
+int			ft_pwd(t_env *env);
+
+	/*
+	 *	unset
+	 */
+
+int			ft_unset(t_cmdc *data, t_env **env);
 
 /*
  *	Global
  */
 
-void		ft_builtin(t_data *data, t_env *env);
+void		ft_builtin(t_cmdc *data, t_env **env);
 void		handle_signal(int sign);
+
 
 /*
  * Parsing
  */
-void		ft_parse(char *str);
+void		ft_parse(char *str, t_env **env);
 int			ft_gettype(char str);
 int			ft_getnbcmd(char *str);
 char		**ft_splitpars(char const *s, char c);
+	
+	/*
+	 *	List (listpars.c)
+	 */
+t_cmdc		*ls_newcmd(char **cmd, int refcmd);
+void		ft_lstadd_backkk(t_cmdc **ls, t_cmdc *lt);
+int			ft_lstsizee(t_cmdc *lst);
+void		ft_lstread(t_cmdc *lst);
 
 #endif
