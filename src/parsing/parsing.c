@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 09:32:11 by phkevin           #+#    #+#             */
-/*   Updated: 2024/08/30 16:09:52 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/08/30 16:28:45 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	ft_parse(char *str, t_env **env)
 	cmdc = initlist(cmdm->nb_cmd, strs, cmdc);
 	//ft_lstread(*cmdc);
 	ft_sendcmd(cmdc, env);
-	free(strs);
+	//free(strs);
 }
