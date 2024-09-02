@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 11:47:58 by phkevin           #+#    #+#             */
-/*   Updated: 2024/08/30 15:54:28 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/09/02 14:58:07 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ void	ft_lstread(t_cmdc *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("cmd_ arg = %s\n", tmp->cmd);
-		printf("\n");
+		printf("cmd = %s\n", tmp->cmd);
 		tmp = tmp->next;
 	}
 }

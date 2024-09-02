@@ -1,3 +1,0 @@
-[1;94mminishell[0m$ $ pwd
-/home/phkevin/Groupe Work/MyMinishell
-[1;94mminishell[0m$ $ 

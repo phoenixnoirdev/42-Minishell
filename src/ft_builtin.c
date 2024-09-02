@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:52:43 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/30 15:49:14 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/09/02 15:15:15 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_builtin(t_cmdc *data, t_env **env)
 		data->code_child = ft_cd(data, *env);
 	else if (ft_strequal(a_cmd[0], "pwd"))
 		data->code_child = ft_pwd(*env);
-	else if (ft_strequal(a_cmd[0], "export"))
+	/*else if (ft_strequal(a_cmd[0], "export"))
 		data->code_child = ft_export(data, *env);
 	else if (ft_strequal(a_cmd[0], "unset"))
 		data->code_child = ft_unset(data, env);
@@ -58,6 +58,6 @@ void	ft_builtin(t_cmdc *data, t_env **env)
 	{
 		//ft_print_error(a_cmd[0]);
 		data->code_child = 127;
-	}
+	}*/
 	ft_free_array(a_cmd);
 }

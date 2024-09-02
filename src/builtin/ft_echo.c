@@ -6,7 +6,7 @@
 /*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:55:36 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/30 14:44:36 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/09/02 15:02:34 by phkevin          ###   Luxembour.lu      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_echo(t_cmdc *data, t_env *env)
 
 	(void)env;
 	opt = 0;
-	add_history(data->cmd);
 	array = ft_split(data->cmd, ' ');
 	if (!array[1])
 	{
