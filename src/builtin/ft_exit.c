@@ -32,13 +32,18 @@
  *
  */
 
-static void	ft_free_data(t_cmdc **data)
+void	ft_free_data(t_cmdc **data)
 {
-	if (!data)
-		return ;
-	/*if (data->cmd)
-		free(data->cmd);*/
-	free(data);
+	t_cmdc *tmp;
+
+	while (*data)
+	{
+		tmp = (*data)->next;
+		if ((*data)->cmd)
+			free((*data)->cmd);
+		free(*data);
+		*data = tmp;
+	}
 }
 
 /*

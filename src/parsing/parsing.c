@@ -20,12 +20,19 @@ static t_cmdc	**initlist(int nbcmd, char **strs, t_cmdc **cmdc)
 	i = 0;
 	cmdc = (t_cmdc **)ft_calloc((nbcmd + 1), sizeof(t_cmdc));
 	if (!cmdc)
+	{
+		free (strs);
 		return (NULL);
+	}
 	while (strs[i] != NULL)
 	{
 		cmdct = ls_newcmd(strs, i);
 		if (!cmdct)
+		{
+			free (strs);
+			ft_free_data(cmdc);
 			return (NULL);
+		}
 		ft_lstadd_backkk(cmdc, cmdct);
 		i++;
 	}
@@ -56,18 +63,23 @@ void	ft_parse(char *str, t_env **env)
 	if (!cmdm)
 		return ;
 	cmdm->nb_cmd = ft_getnbcmd(str);
-	strs = (char **)malloc((cmdm->nb_cmd + 1) * sizeof (char *));
-	if (!strs)
-		return ;
 	strs = ft_splitpars(str, '|');
+	if (!strs)
+	{
+		free(cmdm);
+		return;
+	}
 	cmdc = initlist(cmdm->nb_cmd, strs, cmdc);
-
+	if (!cmdc) {
+		free(cmdm);
+		return;
+	}
 
 	//ft_lstread(*cmdc);
-	
-	
+
+
 	ft_sendcmd(cmdc, env);
-	
-	
-	//free(strs);
+	free(cmdm);
+	ft_free_data(cmdc);
+	free(cmdc);
 }

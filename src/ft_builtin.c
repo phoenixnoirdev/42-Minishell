@@ -49,7 +49,7 @@ void	ft_builtin(t_cmdc *data, t_env **env)
 	/*else if (ft_strequal(a_cmd[0], "export"))
 		data->code_child = ft_export(data, *env);
 	else if (ft_strequal(a_cmd[0], "unset"))
-		data->code_child = ft_unset(data, env);
+		data->code_child = ft_unset(data, env);*/
 	else if (ft_strequal(a_cmd[0], "env"))
 		data->code_child = ft_env(data, env);
 	else if (ft_strequal(a_cmd[0], "exit"))
@@ -58,6 +58,6 @@ void	ft_builtin(t_cmdc *data, t_env **env)
 	{
 		//ft_print_error(a_cmd[0]);
 		data->code_child = 127;
-	}*/
+	}
 	ft_free_array(a_cmd);
 }

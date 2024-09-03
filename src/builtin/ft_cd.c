@@ -47,7 +47,9 @@ static int	ft_go_back(t_env *env, char **array)
 		return (1);
 	}
 	printf("%s\n", old_pwd);
+	printf("set pwd \n");
 	ft_set_env_value(env, "OLDPWD", pwd);
+	printf("set old pwd \n");
 	ft_set_env_value(env, "PWD", old_pwd);
 	return (0);
 }

@@ -125,6 +125,7 @@ t_env		*ft_add_node(t_env *env, char *key, char *value);
 	 *	exit
 	 */
 
+void		ft_free_data(t_cmdc **data);
 int			ft_exit(t_cmdc *data, t_env **env);
 
 	/*
