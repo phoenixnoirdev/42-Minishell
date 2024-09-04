@@ -46,10 +46,10 @@ void	ft_builtin(t_cmdc *data, t_env **env)
 		data->code_child = ft_cd(data, *env);
 	else if (ft_strequal(a_cmd[0], "pwd"))
 		data->code_child = ft_pwd(*env);
-	/*else if (ft_strequal(a_cmd[0], "export"))
+	else if (ft_strequal(a_cmd[0], "export"))
 		data->code_child = ft_export(data, *env);
 	else if (ft_strequal(a_cmd[0], "unset"))
-		data->code_child = ft_unset(data, env);*/
+		data->code_child = ft_unset(data, env);
 	else if (ft_strequal(a_cmd[0], "env"))
 		data->code_child = ft_env(data, env);
 	else if (ft_strequal(a_cmd[0], "exit"))
