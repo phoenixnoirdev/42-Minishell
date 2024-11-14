@@ -3,53 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+        */
+/*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:23:25 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/30 14:45:11 by phkevin          ###   Luxembour.lu      */
+/*   Updated: 2024/11/14 08:33:05 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	ft_get_nb_key(t_env *env)
-{
-	int	count;
-
-	count = 0;
-	if (!env)
-		return (count);
-	while (env)
-	{
-		count++;
-		env = env->next;
-	}
-	return (count);
-}
-
-static void	ft_sort_a_str(char **a_key, int count)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-
-	i = -1;
-	while (++i < count)
-	{
-		j = -1;
-		while (++j < count - 1)
-		{
-			if (ft_strcmp(a_key[j], a_key[j + 1]) > 0)
-			{
-				tmp = a_key[j];
-				a_key[j] = a_key[j + 1];
-				a_key[j + 1] = tmp;
-			}
-		}
-	}
-}
-
-static char	**ft_get_all_key(t_env *env, int count)
+/*
+ * <cat>minishell</cat>
+ *
+ * <summary>
+ * 	char	**ft_get_all_key(t_env *env, int count)
+ * </summary>
+ *
+ * <description>
+ * 	ft_get_all_key creat an array with all key of the linked list env.
+ * </description>
+ *
+ * <param type="t_env **" name="env">linked list env</param>
+ * <param type="int" name="count">number ok key on linked list env</param>
+ *
+ * <return>
+ *	an array of key.
+ * </return>
+ *
+ */
+char	**ft_get_all_key(t_env *env, int count)
 {
 	char	**a_key;
 	int		index;
@@ -70,53 +52,146 @@ static char	**ft_get_all_key(t_env *env, int count)
 	return (a_key);
 }
 
-static int	ft_print_export_env(t_env *env)
+/*
+ * <cat>minishell</cat>
+ *
+ * <summary>
+ * 	int	ft_get_key(char *key_value)
+ * </summary>
+ *
+ * <description>
+ * 	ft_get_key get the first part of the string formated like "key=value".
+ * </description>
+ *
+ * <param type="char *" name="key_value">string with key and value</param>
+ *
+ * <return>
+ * 	a new pointer to the key.
+ * </return>
+ *
+ */
+static char	*ft_get_key(char *key_value)
 {
-	char	*value;
-	char	**a_key;
-	int		count;
-	int		index;
+	char	*key;
+	char	**a_key_value;
 
-	value = NULL;
-	a_key = NULL;
-	count = 0;
-	index = -1;
-	count = ft_get_nb_key(env);
-	a_key = ft_get_all_key(env, count);
-	ft_sort_a_str(a_key, count);
-	while (a_key[++index])
-	{
-		value = ft_get_env_value(env, a_key[index]);
-		if (value)
-			printf("export %s=%s\n", a_key[index], value);
-		else
-			printf("export %s\n", a_key[index]);
-	}
-	ft_free_array(a_key);
-	return (0);
+	if (!key_value)
+		return (NULL);
+	a_key_value = ft_split(key_value, '=');
+	if (!a_key_value)
+		return (NULL);
+	key = ft_strdup(a_key_value[0]);
+	ft_free_array(a_key_value);
+	return (key);
 }
 
-int	ft_export(t_cmdc *data, t_env *env)
+/*
+ * <cat>minishell</cat>
+ *
+ * <summary>
+ * 	char	*ft_get_value(char *key_value)
+ * </summary>
+ *
+ * <description>
+ * 	ft_get_value get the value of the string formated like key=value.
+ * </description>
+ *
+ * <param type="char *" name="key_value">string with key and value</param>
+ *
+ * <return>
+ *  a pointer to a sting with the value.
+ * </return>
+ *
+ */
+static char	*ft_get_value(char *key_value)
 {
-	char	**array;
-	char	**key_val;
+	char	*value;
+	int		index_sep;
+
+	if (!key_value)
+		return (NULL);
+	index_sep = ft_charchr(key_value, '=');
+	if (index_sep == -1)
+		return (NULL);
+	value = ft_substr(key_value, ++index_sep, ft_strlen(key_value));
+	return (value);
+}
+
+/*
+ * <cat>minishell</cat>
+ *
+ * <summary>
+ * 	void	ft_run_export(t_pipex **pipex, int *code_retour)
+ * </summary>
+ *
+ * <description>
+ * 	ft_run_export export each key/value passed in argument.
+ * </description>
+ *
+ * <param type="t_pipex **" name="pipex">structure pipex</param>
+ * <param type="int *" name="code_retour">pointer to the return value</param>
+ *
+ * <return>
+ * 	0 if success or 1 if error.
+ * </return>
+ *
+ */
+static void	ft_run_export(t_pipex **pipex, int *code_retour)
+{
+	char	*key;
+	char	*value;
 	int		index;
 
-	array = ft_split(data->cmd, ' ');
-	if (!array)
-		return (1);
-	if (ft_strequal(data->cmd, "export"))
-		return (ft_free_array(array), ft_print_export_env(env));
-	index = 0;
-	while (array[++index])
+	index = -1;
+	while ((*pipex)->a_cmd_opt[++index])
 	{
-		key_val = ft_split(array[index], '=');
-		if (key_val[1])
-			ft_add_node(env, key_val[0], key_val[1]);
+		key = ft_get_key((*pipex)->a_cmd_opt[index]);
+		if (ft_valid_key(key))
+		{
+			value = ft_get_value((*pipex)->a_cmd_opt[index]);
+			if (ft_check_key((*pipex)->shell->l_env, key))
+				ft_set_env_value(&(*pipex)->shell, key, value);
+			else
+				ft_export_value(&(*pipex)->shell, (*pipex)->a_cmd_opt[index]);
+			ft_free(value);
+		}
 		else
-			ft_add_node(env, key_val[0], NULL);
-		ft_free_array(key_val);
+		{
+			ft_put_error_arg("export", (*pipex)->a_cmd_opt[index], E_EXPORT);
+			*code_retour = 1;
+		}
+		ft_free(key);
 	}
-	ft_free_array(array);
-	return (0);
+}
+
+/*
+ * <cat>minishell</cat>
+ *
+ * <summary>
+ * 	int	ft_export(t_pipex *pipex)
+ * </summary>
+ *
+ * <description>
+ * 	ft_export is like a builtin function en bash. it's execute some function 
+ * 	compared to an array of arguments.
+ * </description>
+ *
+ * <param type="t_pipex *" name="pipex">structure pipex</param>
+ *
+ * <return>
+ * 	0 if success or 1 if error.
+ * </return>
+ *
+ */
+int	ft_export(t_pipex **pipex)
+{
+	int		code_retour;
+
+	if (!(*pipex)->a_cmd_opt)
+		return (ft_print_export_env((*pipex)->shell, (*pipex)->fd_out));
+	code_retour = 0;
+	ft_run_export(pipex, &code_retour);
+	if ((*pipex)->fd_out > 2)
+		close((*pipex)->fd_out);
+	return (code_retour);
 }

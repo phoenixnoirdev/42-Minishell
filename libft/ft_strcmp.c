@@ -6,7 +6,7 @@
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:58:23 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/23 09:56:18 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/11/02 11:04:13 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
+	if (!s1)
+		return (0 - (unsigned char)*s2);
+	if (!s2)
+		return ((unsigned char)*s1);
 	while (*s1 && (*s1 == *s2))
 	{
 		s1++;

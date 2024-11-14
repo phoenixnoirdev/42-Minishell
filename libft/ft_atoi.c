@@ -6,7 +6,7 @@
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:42:34 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/06/17 11:08:15 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/11/11 09:55:53 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	ft_atoi(const char *nptr)
 	int		nb;
 	int		neg;
 
+	if (!nptr)
+		return (0);
 	s = (char *)nptr;
 	nb = 0;
 	neg = 0;

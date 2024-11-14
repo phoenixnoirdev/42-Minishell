@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: phkevin <phkevin@42luxembourg.lu>          +#+  +:+       +#+         #
+#    By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 09:35:29 by nfordoxc          #+#    #+#              #
-#    Updated: 2024/08/30 11:51:19 by phkevin          ###   Luxembour.lu       #
+#    Updated: 2024/11/14 09:14:08 by nfordoxc         ###   Luxembourg.lu      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,16 @@
 
 CC				=	cc
 CFLAGS			=	-Wall -Werror -Wextra -g
+CC_OPT			=	
+CC_DEF			=	
 
 DEB				=	valgrind
 DEB_OPT			=	--tool=memcheck \
 					--leak-check=full \
-					--show-leak-kinds=all \
-					--track-fds=yes
+					--show-leak-kinds=definite,indirect,possible \
+					--track-fds=yes \
+					2> error
+
 
 ARG0			=	
 
@@ -39,9 +43,11 @@ RM				=	rm -f
 
 LIB_LIBFT_DIR	=	./libft
 LIB_PRINTF_DIR	=	./ft_printf
+LIB_GNL_DIR		=	./gnl
 
 LIBFT_NAME		=	-lft
 FTPRINTF_NAME	=	-lftprintf
+LIB_GNL_NAME	=	-lgnl
 
 LIB_PROG		=
 LIB_OPTI		=
@@ -49,6 +55,7 @@ LIB_OPTI		=
 LIB_NAME		=
 
 MYLIBS			=	-L$(LIB_LIBFT_DIR) $(LIBFT_NAME)\
+					-L$(LIB_GNL_DIR) $(LIB_GNL_NAME)\
 					-lreadline
 
 MYLIBS_BONUS	=	
@@ -58,23 +65,51 @@ MYLIBS_BONUS	=
 ################################################################################
 
 SRC				=	./src/main.c \
-					./src/ft_error.c \
-					./src/ft_builtin.c \
-					./src/ft_signal.c \
-					./src/builtin/ft_echo.c \
-					./src/builtin/ft_env.c \
-					./src/builtin/ft_env_utils.c \
-					./src/builtin/ft_export.c \
-					./src/builtin/ft_export_utils.c \
 					./src/builtin/ft_cd.c \
+					./src/builtin/ft_echo.c \
+					./src/builtin/ft_env_utils.c \
+					./src/builtin/ft_env.c \
+					./src/builtin/ft_exec_builtin.c \
+					./src/builtin/ft_exit.c \
+					./src/builtin/ft_export_utils_0.c \
+					./src/builtin/ft_export_utils_1.c \
+					./src/builtin/ft_export.c \
 					./src/builtin/ft_pwd.c \
 					./src/builtin/ft_unset.c \
-					./src/builtin/ft_exit.c \
-					./src/parsing/arg.c \
-					./src/parsing/parsing.c \
-					./src/parsing/token.c \
-					./src/parsing/ft_splitpars.c \
-					./src/parsing/listpars.c \
+					./src/utils/ft_check_cmd_utils.c \
+					./src/utils/ft_check_cmd.c \
+					./src/utils/ft_env_to_array.c \
+					./src/utils/ft_error.c \
+					./src/utils/ft_parse_string_utils.c \
+					./src/utils/ft_parse_string.c \
+					./src/utils/ft_signal.c \
+					./src/utils/ft_struct.c \
+					./src/utils/ft_wilcard_utils.c \
+					./src/utils/ft_wilcard.c \
+					./src/token/ft_parse.c \
+					./src/token/ft_parse_utils_0.c \
+					./src/token/ft_parse_utils_1.c \
+					./src/token/ft_parse_utils_2.c \
+					./src/tree/ft_tree_to_pipex.c \
+					./src/tree/ft_tree_utils_0.c \
+					./src/tree/ft_tree_utils_1.c \
+					./src/tree/ft_tree_utils_2.c \
+					./src/tree/ft_tree.c \
+					./src/free/ft_free_cmd.c \
+					./src/free/ft_free_env.c \
+					./src/free/ft_free_pipex.c \
+					./src/free/ft_free_shell.c \
+					./src/free/ft_free_tokens.c \
+					./src/free/ft_free_tree.c \
+					./src/pipex/ft_pipex_utils.c \
+					./src/pipex/ft_exec_process.c \
+					./src/pipex/ft_fill_pipex_0.c \
+					./src/pipex/ft_fill_pipex_1.c \
+					./src/pipex/ft_get_access.c \
+					./src/pipex/ft_get_fd.c \
+					./src/pipex/ft_here_doc.c \
+					./src/pipex/ft_init_pipex.c \
+					./src/pipex/ft_run_pipex.c
 
 OBJ				=	$(SRC:.c=.o)
 
@@ -123,53 +158,11 @@ BWHITE			=	'\033[1;97m'
 ################################################################################
 
 CURRENT_FILE	= 	0
-NB_SRC			=	6
+NB_SRC			=	$(shell find ./src/ -type f -name '*.c' | wc -l)
 SLEEP_TIME		=	0.001
 
-################################################################################
-#	Rules																	   #
-################################################################################
-
-.PHONY :	all $(NAME) deb clean fclean re cafe nico good bad
-
-all: 		$(LIB_LIBFT_DIR)/libft.a \
-			$(NAME)
-
-$(NAME):	$(OBJ)
-	
-	@printf "\n$(BYELLOW)Compiling of the program $(NAME)$(YELLOW)\n"
-	@$(CC) $(CFLAGS) $(OBJ) $(MYLIBS) -o $(NAME)
-	@for i in $$(seq 1 50); do \
-		printf "\r\033[K\033[0K["; \
-		for j in $$(seq 1 $$i); do \
-			printf "=="; \
-		done; \
-		printf " %d%% ]" $$((i * 2)); \
-		sleep $(SLEEP_TIME); \
-	done; \
-	echo $(RESET)
-
-$(LIB_LIBFT_DIR)/libft.a:
-	@$(MAKE) -sC $(LIB_LIBFT_DIR)
-
-%.o :		%.c
-	@$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE)+1))))
-	@printf "\r\033[K\033[0K$(BBLUE)Compiling files *.C => $< ["
-	@for i in $$(seq 0 $$(($(CURRENT_FILE)*100/$(NB_SRC)))); do \
-		printf "="; \
-	done
-	@printf "] $(CURRENT_FILE)/$(NB_SRC) $(RESET)"
-	@cc -Wall -Werror -Wextra -c -o $@ $<
-
-deb:		$(LIB_LIBFT_DIR)/libft.a \
-			$(OBJ)
-
-	@$(CC) $(CFLAGS) $(CC_OPT) $(OBJ) $(MYLIBS) -g -o $(NAME)
-	@echo "\n$(RESET)==========	RUN DEBUG MODE	=========="
-	$(DEB) $(DEB_OPT) ./$(NAME)
-
-clean:
-	@$(RM) src/*.o > /dev/null 2>&1
+define delete_progress
+	@$(RM) $(1) > /dev/null 2>&1
 	@for i in $$(seq 100 -1 0); do \
 		printf "\r\033[K\033[0K"; \
 		if [ $$((i % 4)) -eq 0 ]; then \
@@ -187,13 +180,72 @@ clean:
 		printf " %d/100 ]$(RESET)" $$i; \
 		sleep $(SLEEP_TIME); \
 	done
-	@printf "\r\033[K\033[0K$(GREEN)All files *.o of $(NAME) deleted\n$(WITHE)"
+	@printf "\r\033[K\033[0K$(GREEN)All files $(1) of $(NAME) deleted\n$(WITHE)"
+endef
+
+################################################################################
+#	Rules																	   #
+################################################################################
+
+.PHONY :	all $(NAME) deb clean fclean re cafe nico good bad 
+
+all: 		$(LIB_LIBFT_DIR)/$(LIBFT_NAME) \
+			$(LIB_GNL_DIR)/$(LIB_GNL_NAME) \
+			$(NAME)
+
+$(NAME):	$(OBJ)
+	
+	@printf "\n$(BYELLOW)Compiling of the program $(NAME)$(YELLOW)\n"
+	@$(CC) $(CFLAGS) $(CC_DEF) $(OBJ) $(MYLIBS) -o $(NAME)
+	@for i in $$(seq 1 50); do \
+		printf "\r\033[K\033[0K["; \
+		for j in $$(seq 1 $$i); do \
+			printf "=="; \
+		done; \
+		printf " %d%% ]" $$((i * 2)); \
+		sleep $(SLEEP_TIME); \
+	done; \
+	echo $(RESET)
+
+$(LIB_LIBFT_DIR)/$(LIBFT_NAME):
+	@$(MAKE) -sC $(LIB_LIBFT_DIR)
+
+$(LIB_GNL_DIR)/$(LIB_GNL_NAME):
+	@$(MAKE) -sC $(LIB_GNL_DIR)
+
+%.o :		%.c
+	@$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE)+1))))
+	@printf "\r\033[K\033[0K$(BBLUE)Compiling files *.C => $< ["
+	@for i in $$(seq 0 $$(($(CURRENT_FILE)*100/$(NB_SRC)))); do \
+		printf "="; \
+	done
+	@printf "] $(CURRENT_FILE)/$(NB_SRC) $(RESET)"
+	@$(CC) $(CFLAGS) $(CC_DEF) -c -o $@ $<
+
+deb:		$(LIB_LIBFT_DIR)/$(LIBFT_NAME) \
+			$(LIB_GNL_DIR)/$(LIB_GNL_NAME) \
+			$(OBJ)
+
+	@$(CC) $(CFLAGS) $(CC_DEF) $(CC_OPT) $(OBJ) $(MYLIBS) -g -o $(NAME)
+	@echo "\n$(RESET)==========	RUN DEBUG MODE	=========="
+	$(DEB) $(DEB_OPT) ./$(NAME)
+
+clean:
+	$(call delete_progress, ./src/*.o)
+	$(call delete_progress, ./src/builtin/*.o)
+	$(call delete_progress, ./src/free/*.o)
+	$(call delete_progress, ./src/pipex/*.o)
+	$(call delete_progress, ./src/token/*.o)
+	$(call delete_progress, ./src/tree/*.o)
+	$(call delete_progress, ./src/utils/*.o)
 	@$(MAKE) -sC $(LIB_LIBFT_DIR) clean
+	@$(MAKE) -sC $(LIB_GNL_DIR) clean
 
 fclean: 	clean
 	@$(RM) $(NAME) > /dev/null 2>&1
 	@printf "\r\033[K\033[0K$(GREEN)$(NAME) deleted\n $(RESET)"
 	@$(MAKE) -sC $(LIB_LIBFT_DIR) fclean
+	@$(MAKE) -sC $(LIB_GNL_DIR) fclean
 
 re : 		fclean all
 

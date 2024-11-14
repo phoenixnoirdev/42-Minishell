@@ -6,7 +6,7 @@
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:05:18 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/06/17 11:09:04 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/11/02 17:29:08 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*new;
 
 	len1 = ft_strlen(s1);
+	if (!s2)
+		return (ft_strdup(s1));
 	len2 = ft_strlen(s2);
 	new = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!new)

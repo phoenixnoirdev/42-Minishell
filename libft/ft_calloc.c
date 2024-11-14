@@ -6,7 +6,7 @@
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:47:01 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/06/17 11:08:21 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/11/06 11:46:26 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  *
  * <description>
  *	ft_calloc allocate memory and set all byte to 0. check the overflow of
- *	int_max for malloc.
+ *	size_t for malloc.
  * </description>
  *
  * <param type="size_t" name="nmemb">number of member</param>
@@ -40,9 +40,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void	*ptr;
 
 	size_total = nmemb * size;
-	if (size_total == 0)
-		return (malloc(1 * sizeof(char)));
-	if (size_total > SIZE_MAX)
+	if (size_total / nmemb != size)
 		return (NULL);
 	ptr = malloc(size_total);
 	if (!ptr)

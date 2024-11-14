@@ -6,7 +6,7 @@
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:04:24 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/06/17 11:08:58 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/11/02 17:06:29 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	*ft_malloc_row(char const *s, char c)
 	index = 0;
 	while (s[index] && s[index] != c)
 		index++;
-	row = (char *)malloc((index + 1) * sizeof(char));
+	row = (char *)ft_calloc((index + 1), sizeof(char));
 	if (!row)
 		return (NULL);
 	index = 0;
@@ -125,7 +125,7 @@ char	**ft_split(char const *s, char c)
 	index = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)malloc((countsection(s, c) + 1) * sizeof (char *));
+	array = (char **)ft_calloc((countsection(s, c) + 1), sizeof (char *));
 	if (!array)
 		return (NULL);
 	while (*s)

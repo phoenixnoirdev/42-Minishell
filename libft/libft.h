@@ -6,7 +6,7 @@
 /*   By: nfordoxc <nfordoxc@42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:59:21 by nfordoxc          #+#    #+#             */
-/*   Updated: 2024/08/29 13:09:54 by nfordoxc         ###   Luxembourg.lu     */
+/*   Updated: 2024/11/08 10:07:21 by nfordoxc         ###   Luxembourg.lu     */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
  * Bool functions
  */
 
+int			ft_issep(int c);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
 int			ft_isalnum(int c);
@@ -69,14 +70,18 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strdup(const char *s);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
+char		*ft_join_array(char **a_str, char *sep);
+char		*ft_strndup(const char *s, size_t nbr_char);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_strremoveset(char const *s1, char *charset);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 
 char		**ft_strarraycpy(char **array);
 char		**ft_split(char const *s, char c);
+char		**ft_append_str(char **array, char *str);	// TO TESTED
 
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 
@@ -113,6 +118,7 @@ int			ft_memcmp(const void *s1, const void *s2, size_t n);
 char		**ft_free_array(char **array);
 
 void		ft_bzero(void *s, size_t n);
+void		ft_free(void *ptr);
 
 void		*ft_memset(void *s, int c, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
